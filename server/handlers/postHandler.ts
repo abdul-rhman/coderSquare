@@ -1,14 +1,11 @@
 import { db } from "../datastore";
 import { ExpressHandler, Post } from "../types";
 import crypto from 'crypto'
+import {createPostReq, createPostRes, listPostsReq, listPostsRes} from "../api";
 
-
-export const listPostsHandler:ExpressHandler<{},{}>= (req,res)=>{
-    res.status(200).json(db.listPosts())
+export const listPostsHandler:ExpressHandler<listPostsReq,listPostsRes>= (req,res)=>{
+    res.status(200).json({posts:db.listPosts()})
 }
-
-type createPostRes = {}
-type createPostReq = Pick<Post,'title'|'url'|'userId'> 
 
 export const createPostHandler:ExpressHandler<createPostReq,createPostRes>= (req,res)=>{
     if(req.body.title && req.body.url && req.body.userId){
@@ -21,5 +18,5 @@ export const createPostHandler:ExpressHandler<createPostReq,createPostRes>= (req
         })
          res.status(200).send('done');
     }
-    else res.status(400);
+    else res.status(400).send('missing fields');
 }
