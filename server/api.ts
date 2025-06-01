@@ -1,4 +1,4 @@
-import { Post } from "./types"
+import { Post , User } from "./types"
 
 
 /* Posts API */
@@ -16,3 +16,11 @@ export type getPostRes = {
     post: Post | undefined
 }
 export type getPostReq = {}
+
+export type signUpReq =  Pick<User,'email'|'firstName'|'lastName'|'password'|'username'>;
+export type signUpRes = {};
+export type signInReq = {
+    login: string;
+    password: string;
+}
+export type signInRes = Pick<User,'email'|'firstName'|'lastName'|'id'>|{};
